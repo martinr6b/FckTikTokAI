@@ -1,0 +1,25 @@
+{
+  "attempts": 10,
+  "delay_between_steps": 1.0,
+  "steps": [
+    {
+      "type": "template",
+      "image": "templates/icon1.png",
+      "threshold": 0.8
+    },
+    {
+      "type": "click",
+      "x": 500,
+      "y": 1200
+    },
+    {
+      "type": "template",
+      "image": "templates/icon2.png",
+      "threshold": 0.8
+    },
+    {
+      "type": "key",
+      "keycode": "4"
+    }
+  ]
+}
