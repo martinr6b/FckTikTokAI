@@ -1,25 +1,26 @@
 {
-  "attempts": 10,
+  "attempts": 1,
   "delay_between_steps": 1.0,
   "steps": [
-    {
-      "type": "template",
-      "image": "templates/icon1.png",
-      "threshold": 0.8
-    },
+
     {
       "type": "click",
-      "x": 500,
-      "y": 1200
+      "x": 1005,
+      "y": 1907
     },
+        {
+  "type": "swipe",
+  "start_x": 945,
+  "start_y": 2300,
+  "end_x": 216,
+  "end_y": 2300,
+  "duration": 200
+},
     {
       "type": "template",
-      "image": "templates/icon2.png",
+      "image": "temeplates/PrivacyOption.png",
       "threshold": 0.8
-    },
-    {
-      "type": "key",
-      "keycode": "4"
     }
+
   ]
 }

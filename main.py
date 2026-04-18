@@ -1,7 +1,7 @@
 import json
 import time
 
-from utils.adb import get_screen, tap, key
+from utils.adb import get_screen, tap, key, swipe
 from utils.vision import find_template
 
 with open("config.json") as f:
@@ -40,5 +40,9 @@ for attempt in range(ATTEMPTS):
         elif step_type == "key":
             print(f"Sending key {step['keycode']}")
             key(step["keycode"])
+
+        elif step_type == "swipe":
+            print(f"Swiping from ({step['start_x']}, {step['start_y']}) to ({step['end_x']}, {step['end_y']}) with duration {step.get('duration', 500)}ms")
+            swipe(step["start_x"], step["start_y"], step["end_x"], step["end_y"], step.get("duration", 500))
 
         time.sleep(DELAY)

@@ -15,3 +15,6 @@ def tap(x, y):
 
 def key(keycode):
     subprocess.run(["adb", "shell", "input", "keyevent", str(keycode)])
+
+def swipe(x1, y1, x2, y2, duration=500):
+    subprocess.run(["adb", "shell", "input", "swipe", str(x1), str(y1), str(x2), str(y2), str(duration)])
