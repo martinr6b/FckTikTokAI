@@ -32,6 +32,13 @@ for attempt in range(ATTEMPTS):
                 tap(*pos)
             else:
                 print("Not found")
+                if step.get("SkipOnFail", False):
+                    print("Skipping step due to SkipOnFail=true")
+                    time.sleep(DELAY)
+                    continue
+                else:
+                    print("Stopping program due to SkipOnFail=false")
+                    exit(1)
 
         elif step_type == "click":
             print(f"Clicking at ({step['x']}, {step['y']})")

@@ -1,5 +1,5 @@
 {
-  "attempts": 1,
+  "attempts": 100,
   "delay_between_steps": 1.0,
   "steps": [
 
@@ -20,7 +20,25 @@
       "type": "template",
       "image": "temeplates/PrivacyOption.png",
       "threshold": 0.8
-    }
-
+    },
+    {
+      "type": "template",
+      "image": "temeplates/AiProcessingON.png",
+      "threshold": 0.99,
+      "SkipOnFail": true
+    },
+    {
+      "type": "click",
+      "x": 595,
+      "y": 811
+    },
+        {
+  "type": "swipe",
+  "start_x": 479,
+  "start_y": 1544,
+  "end_x": 592,
+  "end_y": 990,
+  "duration": 300
+}
   ]
 }
