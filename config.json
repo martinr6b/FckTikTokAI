@@ -1,5 +1,5 @@
 {
-  "attempts": 100,
+  "attempts": 1020,
   "delay_between_steps": 0.7,
   "steps": [
     {
@@ -24,7 +24,7 @@
     {
       "type": "template",
       "image": "temeplates/AiProcessingON.png",
-      "threshold": 0.99,
+      "threshold": 0.95,
       "SkipOnFail": true
     },
     {
