@@ -1,25 +1,25 @@
 {
   "attempts": 100,
-  "delay_between_steps": 1.0,
+  "delay_between_steps": 0.7,
   "steps": [
-
     {
       "type": "click",
-      "x": 1005,
-      "y": 1907
+      "x": 1000,
+      "y": 1927
     },
-        {
-  "type": "swipe",
-  "start_x": 945,
-  "start_y": 2300,
-  "end_x": 216,
-  "end_y": 2300,
-  "duration": 200
-},
+    {
+      "type": "swipe",
+      "start_x": 945,
+      "start_y": 2300,
+      "end_x": 216,
+      "end_y": 2300,
+      "duration": 200
+    },
     {
       "type": "template",
       "image": "temeplates/PrivacyOption.png",
-      "threshold": 0.8
+      "threshold": 0.8,
+      "SkipOnFail": false
     },
     {
       "type": "template",
@@ -32,13 +32,13 @@
       "x": 595,
       "y": 811
     },
-        {
-  "type": "swipe",
-  "start_x": 479,
-  "start_y": 1544,
-  "end_x": 592,
-  "end_y": 990,
-  "duration": 300
-}
+    {
+      "type": "swipe",
+      "start_x": 479,
+      "start_y": 1544,
+      "end_x": 592,
+      "end_y": 990,
+      "duration": 300
+    }
   ]
 }

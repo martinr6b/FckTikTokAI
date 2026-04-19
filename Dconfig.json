@@ -1,34 +1,36 @@
+// This is a reference config file in case the premade one fails and you have to edit some options.
+
 {
-  "attempts": 10,
-  "delay_between_steps": 1.0,
+  "attempts": 10, // Number of times to repeat the entire steps sequence (integer)
+  "delay_between_steps": 1.0, // Delay in seconds between each step (float)
+  
   "steps": [
     {
-      "type": "template",
-      "image": "templates/icon1.png",
-      "threshold": 0.8
-    },
-    {
+      // CLICK - Tap on screen at specific coordinates
       "type": "click",
-      "x": 500,
-      "y": 1200
+      "x": 500, // X coordinate in pixels
+      "y": 1200 // Y coordinate in pixels
     },
     {
+      // TEMPLATE MATCHING - Find and tap an icon/image on screen
       "type": "template",
-      "image": "templates/icon2.png",
-      "threshold": 0.8
+      "image": "temeplates/icon.png", // Path to template image file
+      "threshold": 0.8, // Matching sensitivity 0.0-1.0. Higher = stricter match (default: 0.8)
+      "SkipOnFail": false // true = skip step if template not found, false = stop program (default: false)
     },
     {
+      // SWIPE - Swipe from one point to another
+      "type": "swipe",
+      "start_x": 100, // Starting X coordinate
+      "start_y": 500, // Starting Y coordinate
+      "end_x": 900, // Ending X coordinate
+      "end_y": 100, // Ending Y coordinate
+      "duration": 300 // Swipe duration in milliseconds (default: 500)
+    },
+    {
+      // KEY - Send a keyboard event
       "type": "key",
-      "keycode": "4"
-    },
-    {
-  "type": "swipe",
-  "start_x": 100,
-  "start_y": 500,
-  "end_x": 100,
-  "end_y": 100,
-  "duration": 1000
-}
-  
+      "keycode": 4 // Android keycode: 4=Back, 25=Volume Up, 26=Volume Down, etc.
+    }
   ]
 }
