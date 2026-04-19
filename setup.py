@@ -124,6 +124,23 @@ class Setup:
         self.run_command([sys.executable, "-m", "venv", self.venv_path], 
                         f"Creating virtual environment at {self.venv_path}")
     
+    def activate_venv(self):
+        """Set up virtual environment paths for subsequent operations"""
+        self.print_header("Setting up Virtual Environment")
+        
+        if self.system == "Windows":
+            self.venv_python = os.path.join(self.venv_path, "Scripts", "python.exe")
+            self.venv_pip = os.path.join(self.venv_path, "Scripts", "pip.exe")
+        else:
+            self.venv_python = os.path.join(self.venv_path, "bin", "python")
+            self.venv_pip = os.path.join(self.venv_path, "bin", "pip")
+        
+        # Verify venv python exists
+        if os.path.exists(self.venv_python):
+            self.print_success(f"Using Python: {self.venv_python}")
+        else:
+            self.print_error(f"Virtual environment Python not found: {self.venv_python}")
+    
     def install_requirements(self):
         """Install Python dependencies"""
         self.print_header("Installing Python Dependencies")
@@ -133,35 +150,74 @@ class Setup:
         if not os.path.exists(req_file):
             self.print_error(f"requirements.txt not found at {req_file}")
         
-        # Get pip command from venv
-        if self.system == "Windows":
-            pip_cmd = os.path.join(self.venv_path, "Scripts", "pip")
-        else:
-            pip_cmd = os.path.join(self.venv_path, "bin", "pip")
-        
-        self.run_command([pip_cmd, "install", "--upgrade", "pip"], 
+        self.run_command([self.venv_pip, "install", "--upgrade", "pip"], 
                         "Upgrading pip")
-        self.run_command([pip_cmd, "install", "-r", req_file], 
+        self.run_command([self.venv_pip, "install", "-r", req_file], 
                         "Installing dependencies from requirements.txt")
     
     def print_completion(self):
-        """Print completion message"""
+        """Print completion message and offer to run GUI"""
         self.print_header("Setup Complete!")
         
         if self.system == "Windows":
-            activate_cmd = os.path.join(self.venv_path, "Scripts", "activate.bat")
-            run_cmd = f"{os.path.join(self.venv_path, 'Scripts', 'python.exe')} gui.py"
+            python_exe = os.path.join(self.venv_path, "Scripts", "python.exe")
         else:
-            activate_cmd = os.path.join(self.venv_path, "bin", "activate")
-            run_cmd = f"{os.path.join(self.venv_path, 'bin', 'python')} gui.py"
+            python_exe = os.path.join(self.venv_path, "bin", "python")
         
-        print("To use the GUI, run one of these commands:\n")
-        print(f"  Option 1 (Activate venv):")
-        print(f"    source {activate_cmd}")
-        print(f"    python gui.py\n")
-        print(f"  Option 2 (Direct):")
-        print(f"    {run_cmd}\n")
-        print(f"Located in: {self.script_dir}")
+        print("Setup completed successfully! 🎉")
+        print(f"Virtual environment created at: {self.venv_path}")
+        print(f"Python executable: {python_exe}")
+        print()
+        
+        # Ask user what to do next
+        while True:
+            print("What would you like to do next?")
+            print("1) Run the GUI now")
+            print("2) Finish setup (exit)")
+            print()
+            
+            try:
+                choice = input("Enter your choice (1 or 2): ").strip()
+                
+                if choice == "1":
+                    print("\nLaunching GUI...")
+                    self.run_gui()
+                    break
+                elif choice == "2":
+                    print("\nSetup complete! To run the GUI later:")
+                    print(f"  {python_exe} gui.py")
+                    print(f"Or from the project directory: python gui.py (venv activated)")
+                    break
+                else:
+                    print("Please enter 1 or 2.")
+                    
+            except KeyboardInterrupt:
+                print("\n\nSetup complete!")
+                break
+            except EOFError:
+                print("\n\nSetup complete!")
+                break
+    
+    def run_gui(self):
+        """Run the GUI using the virtual environment"""
+        try:
+            if self.system == "Windows":
+                python_exe = os.path.join(self.venv_path, "Scripts", "python.exe")
+                cmd = [python_exe, "gui.py"]
+            else:
+                python_exe = os.path.join(self.venv_path, "bin", "python")
+                cmd = [python_exe, "gui.py"]
+            
+            print(f"Running: {' '.join(cmd)}")
+            subprocess.run(cmd, cwd=self.script_dir)
+            
+        except Exception as e:
+            print(f"Error launching GUI: {str(e)}")
+            print("You can run it manually with:")
+            if self.system == "Windows":
+                print(f"  {os.path.join(self.venv_path, 'Scripts', 'python.exe')} gui.py")
+            else:
+                print(f"  {os.path.join(self.venv_path, 'bin', 'python')} gui.py")
     
     def run(self):
         """Run full setup"""
@@ -172,6 +228,7 @@ class Setup:
         
         self.install_tkinter()
         self.create_venv()
+        self.activate_venv()
         self.install_requirements()
         self.print_completion()
 

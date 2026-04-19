@@ -41,6 +41,13 @@ cd FckTikTokAI
 python3 setup.py
 ```
 
+The setup script will:
+- ✅ Detect your operating system automatically
+- ✅ Install tkinter (GUI library)
+- ✅ Create and activate a Python virtual environment
+- ✅ Install all dependencies
+- ✅ **Ask if you want to run the GUI immediately or finish setup**
+
 ### Run
 ```bash
 # Launch the GUI
@@ -201,3 +208,7 @@ This project is open source. Feel free to use and modify as needed.
 ---
 
 *Made with ❤️ and a bit of automation magic*
+
+## Current issues:
+- Sometimes skips turning off AI
+- only confirmed working on arch 
