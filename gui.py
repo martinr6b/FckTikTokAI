@@ -16,6 +16,7 @@ class AutomationGUI:
         
         self.process = None
         self.is_running = False
+        self.current_script = None
         
         # Top frame for buttons
         button_frame = tk.Frame(root)
@@ -95,6 +96,7 @@ class AutomationGUI:
             return
         
         self.is_running = True
+        self.current_script = script_name
         self.run_main_btn.config(state=tk.DISABLED)
         self.run_finder_btn.config(state=tk.DISABLED)
         self.stop_btn.config(state=tk.NORMAL)
@@ -111,18 +113,18 @@ class AutomationGUI:
     def _execute_script(self, script_name):
         """Execute script and capture output"""
         try:
-            # Use the virtual environment Python
+            # Use the virtual environment Python with unbuffered output
             python_exe = os.path.join(self.script_dir, ".venv/bin/python")
             
             if script_name == "main":
-                cmd = [python_exe, "main.py"]
+                cmd = [python_exe, "-u", "main.py"]
             elif script_name == "finder":
-                cmd = [python_exe, "WhereDoITap.py"]
+                cmd = [python_exe, "-u", "WhereDoITap.py"]
             
             self.process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
+                stderr=subprocess.PIPE,
                 text=True,
                 bufsize=1,
                 cwd=self.script_dir
@@ -132,6 +134,13 @@ class AutomationGUI:
             for line in self.process.stdout:
                 if self.is_running:
                     self.log(line.rstrip())
+                else:
+                    break
+            
+            # Read any remaining stderr
+            for line in self.process.stderr:
+                if self.is_running:
+                    self.log(f"[ERROR] {line.rstrip()}")
             
             # Wait for process to finish
             self.process.wait()
@@ -147,9 +156,18 @@ class AutomationGUI:
         finally:
             self.is_running = False
             self.process = None
+            
+            # Disable pointer overlay if tap finder was stopped
+            if self.current_script == "finder":
+                try:
+                    subprocess.run(["adb", "shell", "settings", "put", "system", "pointer_location", "0"], timeout=2)
+                except:
+                    pass
+            
             self.run_main_btn.config(state=tk.NORMAL)
             self.run_finder_btn.config(state=tk.NORMAL)
             self.stop_btn.config(state=tk.DISABLED)
+            self.current_script = None
     
     def run_main(self):
         """Run main.py"""
@@ -171,11 +189,22 @@ class AutomationGUI:
                 self.log("Force killing process...")
                 self.process.kill()
             
+            self.log("Script stopped.")
             self.is_running = False
             self.status_var.set("Stopped by user")
+            
+            # Disable pointer overlay if tap finder was stopped
+            if self.current_script == "finder":
+                try:
+                    subprocess.run(["adb", "shell", "settings", "put", "system", "pointer_location", "0"], timeout=2)
+                    self.log("Disabled pointer overlay.")
+                except:
+                    pass
+            
             self.run_main_btn.config(state=tk.NORMAL)
             self.run_finder_btn.config(state=tk.NORMAL)
             self.stop_btn.config(state=tk.DISABLED)
+            self.current_script = None
 
 if __name__ == "__main__":
     root = tk.Tk()

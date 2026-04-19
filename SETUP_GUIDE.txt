@@ -1,0 +1,72 @@
+FCKTIKTOKAI - UNIVERSAL SETUP GUIDE
+===================================
+PREREQUISITES
+=============
+
+- Android device with USB debugging
+- ADB installed
+- TikTok in DARK mode
+- Python 3.8+
+Works on Windows, Linux, and macOS automatically.
+
+QUICK START (3 Steps)
+=====================
+
+1. Download/clone the repository
+
+2. Run the universal setup script:
+   python3 setup.py
+
+   This automatically:
+   - Detects your operating system
+   - Installs tkinter (GUI library)
+   - Creates Python virtual environment
+   - Installs all dependencies
+
+3. Run the GUI:
+   python gui.py
+
+That's it! The setup script handles everything for your OS.
+
+MANUAL SETUP (if automatic fails)
+=================================
+
+1. Install tkinter for your OS:
+   - Windows: Usually included with Python
+   - Linux: Install system package (tk, python3-tk, etc.)
+   - macOS: brew install python-tk
+
+2. Create virtual environment:
+   python3 -m venv .venv
+
+3. Install dependencies:
+   pip install -r requirements.txt
+
+CONFIGURATION
+=============
+
+Edit config.json:
+- attempts: Number of repeats
+- delay_between_steps: Delay between actions
+- steps: Array of actions (use Dconfig.json as a reference for editing)
+
+
+RUNNING
+=======
+
+GUI Mode (Recommended):
+python gui.py
+
+Command Line:
+python main.py              # Run automation
+python WhereDoITap.py       # Find tap coordinates
+
+TROUBLESHOOTING
+===============
+
+- "tkinter not found": Run setup.py again
+- "cv2 not found": pip install opencv-python
+- ADB issues: Install ADB and enable USB debugging
+- Template not found: Lower threshold in config.json
+- GUI won't start: Check tkinter installation
+
