@@ -212,3 +212,4 @@ This project is open source. Feel free to use and modify as needed.
 ## Current issues:
 - Sometimes skips turning off AI
 - only confirmed working on arch 
+- Crashes on posts with removed audio
