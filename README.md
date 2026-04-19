@@ -16,23 +16,32 @@
 
 ## 🚀 Quick Start
 
-### 1. Prerequisites
-- Android device with USB debugging enabled
-- ADB installed and working
-- TikTok app in **DARK MODE**
-- Python 3.8+
+### Prerequisites
+- **Python 3.8+** - [Download from python.org](https://python.org) (check "Add Python to PATH" on Windows)
+- **Android device** with USB debugging enabled
+- **ADB** installed and working
+- **TikTok app** in **DARK MODE**
 
-### 2. Setup (Universal)
+### Installation
+
+#### Option 1: Git Clone (Recommended)
 ```bash
-# Clone or download the repository
 git clone https://github.com/yourusername/FckTikTokAI.git
 cd FckTikTokAI
+```
 
+#### Option 2: Download ZIP (No Git Required)
+1. Go to [GitHub repository](https://github.com/yourusername/FckTikTokAI)
+2. Click **"Code"** → **"Download ZIP"**
+3. Extract the ZIP file to a folder
+
+### Setup
+```bash
 # Run universal setup (works on Windows, Linux, macOS)
 python3 setup.py
 ```
 
-### 3. Run
+### Run
 ```bash
 # Launch the GUI
 python gui.py
